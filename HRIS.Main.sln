@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRIS.Main", "HRIS.Main\HRIS.Main.csproj", "{F41C88C2-1E08-4BD6-AB84-271C23184CAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS.DataAccess", "HRIS.DataAccess\HRIS.DataAccess.csproj", "{020752C0-7726-44D5-90F2-786E7B55C482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRIS.DataAccess", "HRIS.DataAccess\HRIS.DataAccess.csproj", "{020752C0-7726-44D5-90F2-786E7B55C482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS.Provider", "HRIS.Provider\HRIS.Provider.csproj", "{1B10E842-770F-43A2-B1A9-8262E9F79012}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{020752C0-7726-44D5-90F2-786E7B55C482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{020752C0-7726-44D5-90F2-786E7B55C482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{020752C0-7726-44D5-90F2-786E7B55C482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B10E842-770F-43A2-B1A9-8262E9F79012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B10E842-770F-43A2-B1A9-8262E9F79012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B10E842-770F-43A2-B1A9-8262E9F79012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B10E842-770F-43A2-B1A9-8262E9F79012}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
