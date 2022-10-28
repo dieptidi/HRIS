@@ -28,14 +28,16 @@ namespace HRIS.DataAccess.Models
         public virtual DbSet<Interview> Interviews { get; set; }
         public virtual DbSet<PartTimeEmployee> PartTimeEmployees { get; set; }
         public virtual DbSet<PayrollReport> PayrollReports { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<ShiftGroup> ShiftGroups { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-IHVN9CGH;Database=HRIS;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=192.168.2.148;Database=HRIS;User Id=HRIS_Access;Password=indocyber;Trusted_Connection=False;");
             }
         }
 
@@ -288,11 +290,63 @@ namespace HRIS.DataAccess.Models
                     .HasConstraintName("FK_PayrollReport_Employee");
             });
 
+            modelBuilder.Entity<Question>(entity =>
+            {
+                entity.HasKey(e => e.Type);
+
+                entity.ToTable("Question");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Question1)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Question2)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Question3)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<ShiftGroup>(entity =>
             {
                 entity.ToTable("ShiftGroup");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<Test>(entity =>
+            {
+                entity.ToTable("Test");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Pic)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PIC");
+
+                entity.Property(e => e.QuestionType)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TestDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.Test)
+                    .HasForeignKey<Test>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Test_Candidate");
             });
 
             OnModelCreatingPartial(modelBuilder);

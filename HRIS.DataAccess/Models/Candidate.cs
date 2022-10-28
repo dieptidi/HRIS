@@ -24,6 +24,7 @@ namespace HRIS.DataAccess.Models
         public DateTime ApplyDate { get; set; }
         public decimal SallaryRequest { get; set; }
 
+        public virtual Test Test { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Interview> Interviews { get; set; }
     }
