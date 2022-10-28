@@ -10,7 +10,14 @@ namespace HRIS.Provider.Helpers
     {
         public static string FormatDate(DateTime date)
         {
-            return date.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+            if (date == null)
+            {
+                return "N/A";
+            }
+            else
+            {
+                return date.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+            }
         }
 
         public static string FormatName(string firstName, string lastName, string gender)
