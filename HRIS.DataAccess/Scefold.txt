@@ -1,1 +1,1 @@
-﻿Scaffold-DbContext "Server=LAPTOP-IHVN9CGH;Database=HRIS;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+﻿Scaffold-DbContext "Server=192.168.2.148;Database=HRIS;User Id=HRIS_Access;Password=indocyber;Trusted_Connection=False;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
