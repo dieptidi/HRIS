@@ -6,8 +6,7 @@ namespace HRIS.ViewModel.Tests
 {
     public class TestUpsertVM
     {
-        public long Id { get; set; }
-        public long CandidateId { get; set; }
+        public string CandidateId { get; set; }
         public string Pic { get; set; }
         public int MinutesDuration { get; set; }
         public string QuestionType { get; set; }
