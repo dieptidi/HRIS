@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HRIS.DataAccess.Models;
+using HRIS.Provider.Helpers;
 using System.Linq;
 
 namespace HRIS.Provider
@@ -27,35 +28,65 @@ namespace HRIS.Provider
         {
             using (var dbContext = new HRISContext())
             {
-                var test = dbContext.Tests.FirstOrDefault(ts => ts.Id == Convert.ToInt64(id));
+                var test = dbContext.Tests.SingleOrDefault(ts => ts.Id == Convert.ToInt64(id));
                 return test;
             }
         }
 
         public bool Insert(Test model)
         {
-            using (var dbContext = new HRISContext())
+            try
             {
-                try
+                using (var dbContext = new HRISContext())
                 {
                     dbContext.Add(model);
                     dbContext.SaveChanges();
                     return true;
                 }
-                catch (Exception)
-                {
-                    return false;
-                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
         public bool Update(Test model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var dbContext = new HRISContext())
+                {
+                    var selected = dbContext.Tests.SingleOrDefault(ts => ts.Id == model.Id);
+                    if(selected == null) { return false; }
+
+                    Helper.CopyProperties(model, selected);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
         public bool Delete(object id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var dbContext = new HRISContext())
+                {
+                    var selected = dbContext.Tests.SingleOrDefault(ts => ts.Id == Convert.ToInt64(id));
+                    if (selected == null) { return false; }
+
+
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
