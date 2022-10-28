@@ -28,7 +28,7 @@ namespace HRIS.Provider
         {
             using (var dbContext = new HRISContext())
             {
-                var test = dbContext.Tests.SingleOrDefault(ts => ts.Id == Convert.ToInt64(id));
+                var test = dbContext.Tests.SingleOrDefault(ts => ts.CandidateId == id.ToString());
                 return test;
             }
         }
@@ -56,7 +56,7 @@ namespace HRIS.Provider
             {
                 using (var dbContext = new HRISContext())
                 {
-                    var selected = dbContext.Tests.SingleOrDefault(ts => ts.Id == model.Id);
+                    var selected = dbContext.Tests.SingleOrDefault(ts => ts.CandidateId == model.CandidateId);
                     if(selected == null) { return false; }
 
                     Helper.CopyProperties(model, selected);
@@ -75,10 +75,10 @@ namespace HRIS.Provider
             {
                 using (var dbContext = new HRISContext())
                 {
-                    var selected = dbContext.Tests.SingleOrDefault(ts => ts.Id == Convert.ToInt64(id));
+                    var selected = dbContext.Tests.SingleOrDefault(ts => ts.CandidateId == id.ToString());
                     if (selected == null) { return false; }
 
-
+                    dbContext.Tests.Remove(selected);
                     dbContext.SaveChanges();
                     return true;
                 }
