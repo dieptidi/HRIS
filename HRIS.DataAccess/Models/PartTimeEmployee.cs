@@ -8,7 +8,7 @@ namespace HRIS.DataAccess.Models
     public partial class PartTimeEmployee
     {
         public long Id { get; set; }
-        public long EmployeeNumber { get; set; }
+        public string EmployeeNumber { get; set; }
         public decimal Wages { get; set; }
         public int WorkDays { get; set; }
 

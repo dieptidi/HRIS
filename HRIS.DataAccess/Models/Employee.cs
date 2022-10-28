@@ -18,8 +18,8 @@ namespace HRIS.DataAccess.Models
             PayrollReports = new HashSet<PayrollReport>();
         }
 
-        public long EmployeeNumber { get; set; }
-        public long CandidateId { get; set; }
+        public string EmployeeNumber { get; set; }
+        public string CandidateId { get; set; }
         public string Job { get; set; }
         public DateTime? HiredDate { get; set; }
 

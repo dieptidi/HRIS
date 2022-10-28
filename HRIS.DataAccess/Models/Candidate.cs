@@ -10,10 +10,9 @@ namespace HRIS.DataAccess.Models
         public Candidate()
         {
             Employees = new HashSet<Employee>();
-            Interviews = new HashSet<Interview>();
         }
 
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
@@ -24,8 +23,8 @@ namespace HRIS.DataAccess.Models
         public DateTime ApplyDate { get; set; }
         public decimal SallaryRequest { get; set; }
 
+        public virtual Interview Interview { get; set; }
         public virtual Test Test { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
-        public virtual ICollection<Interview> Interviews { get; set; }
     }
 }
