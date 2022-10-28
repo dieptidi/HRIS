@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-#nullable disable
-
-namespace HRIS.DataAccess.Models
+namespace HRIS.ViewModel.Candidates
 {
-    public partial class Candidate
+    public class CandidateUpsertVM
     {
-        public Candidate()
-        {
-            Employees = new HashSet<Employee>();
-        }
-
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -22,9 +16,5 @@ namespace HRIS.DataAccess.Models
         public string JobApply { get; set; }
         public DateTime ApplyDate { get; set; }
         public decimal SallaryRequest { get; set; }
-
-        public virtual Interview Interview { get; set; }
-        public virtual Test Test { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

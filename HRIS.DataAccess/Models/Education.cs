@@ -8,7 +8,7 @@ namespace HRIS.DataAccess.Models
     public partial class Education
     {
         public int Id { get; set; }
-        public long EmployeeNumber { get; set; }
+        public string EmployeeNumber { get; set; }
         public string EducationLevel { get; set; }
         public string InstitutionName { get; set; }
         public DateTime StartDate { get; set; }
