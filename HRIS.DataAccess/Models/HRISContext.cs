@@ -37,7 +37,7 @@ namespace HRIS.DataAccess.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=192.168.2.148;Database=HRIS;User Id=HRIS_Access;Password=indocyber;Trusted_Connection=False;");
+                optionsBuilder.UseSqlServer("Server=LAPTOP-6EDAQBLP;Database=HRIS;User Id=1557;Password=indocyber;Trusted_Connection=False;");
             }
         }
 
@@ -48,6 +48,10 @@ namespace HRIS.DataAccess.Models
             modelBuilder.Entity<Candidate>(entity =>
             {
                 entity.ToTable("Candidate");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ApplyDate).HasColumnType("date");
 
@@ -92,6 +96,11 @@ namespace HRIS.DataAccess.Models
             {
                 entity.ToTable("Competency");
 
+                entity.Property(e => e.EmployeeNumber)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -135,6 +144,11 @@ namespace HRIS.DataAccess.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.EmployeeNumber)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.EndDate).HasColumnType("date");
 
                 entity.Property(e => e.InstitutionName)
@@ -159,7 +173,14 @@ namespace HRIS.DataAccess.Models
 
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.CandidateId).HasColumnName("CandidateID");
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CandidateId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.HiredDate).HasColumnType("date");
 
@@ -181,19 +202,23 @@ namespace HRIS.DataAccess.Models
 
                 entity.ToTable("EmployeeShiftGroupDemo");
 
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ShiftGroupId).HasColumnName("ShiftGroupID");
 
                 entity.HasOne(d => d.EmployeeNumberNavigation)
                     .WithMany(p => p.EmployeeShiftGroupDemos)
                     .HasForeignKey(d => d.EmployeeNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_EmployeeShiftGroupDemo_Employee1");
+                    .HasConstraintName("FK_EmployeeShiftGroupDemo_ShiftGroup");
 
                 entity.HasOne(d => d.ShiftGroup)
                     .WithMany(p => p.EmployeeShiftGroupDemos)
                     .HasForeignKey(d => d.ShiftGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_EmployeeShiftGroupDemo_ShiftGroup");
+                    .HasConstraintName("FK_EmployeeShiftGroupDemo_ShiftGroup1");
             });
 
             modelBuilder.Entity<Experience>(entity =>
@@ -201,6 +226,11 @@ namespace HRIS.DataAccess.Models
                 entity.ToTable("Experience");
 
                 entity.Property(e => e.CompanyName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EmployeeNumber)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -227,6 +257,11 @@ namespace HRIS.DataAccess.Models
 
                 entity.Property(e => e.Allowance).HasColumnType("decimal(5, 2)");
 
+                entity.Property(e => e.EmployeeNumber)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Salary).HasColumnType("money");
 
                 entity.HasOne(d => d.EmployeeNumberNavigation)
@@ -238,11 +273,15 @@ namespace HRIS.DataAccess.Models
 
             modelBuilder.Entity<Interview>(entity =>
             {
+                entity.HasKey(e => e.CandidateId)
+                    .HasName("PK_Interview_1");
+
                 entity.ToTable("Interview");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.CandidateId).HasColumnName("CandidateID");
+                entity.Property(e => e.CandidateId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CandidateID");
 
                 entity.Property(e => e.InterviewDate).HasColumnType("datetime");
 
@@ -253,8 +292,8 @@ namespace HRIS.DataAccess.Models
                     .HasColumnName("PIC");
 
                 entity.HasOne(d => d.Candidate)
-                    .WithMany(p => p.Interviews)
-                    .HasForeignKey(d => d.CandidateId)
+                    .WithOne(p => p.Interview)
+                    .HasForeignKey<Interview>(d => d.CandidateId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Interview_Candidate");
             });
@@ -262,6 +301,11 @@ namespace HRIS.DataAccess.Models
             modelBuilder.Entity<PartTimeEmployee>(entity =>
             {
                 entity.ToTable("PartTimeEmployee");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Wages).HasColumnType("money");
 
@@ -275,6 +319,11 @@ namespace HRIS.DataAccess.Models
             modelBuilder.Entity<PayrollReport>(entity =>
             {
                 entity.ToTable("PayrollReport");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.MonthIncome).HasColumnType("money");
 
@@ -325,9 +374,14 @@ namespace HRIS.DataAccess.Models
 
             modelBuilder.Entity<Test>(entity =>
             {
+                entity.HasKey(e => e.CandidateId)
+                    .HasName("PK_Test_1");
+
                 entity.ToTable("Test");
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.CandidateId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Pic)
                     .IsRequired()
@@ -342,9 +396,9 @@ namespace HRIS.DataAccess.Models
 
                 entity.Property(e => e.TestDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.Candidate)
                     .WithOne(p => p.Test)
-                    .HasForeignKey<Test>(d => d.Id)
+                    .HasForeignKey<Test>(d => d.CandidateId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Test_Candidate");
             });

@@ -8,7 +8,7 @@ namespace HRIS.DataAccess.Models
     public partial class Experience
     {
         public int Id { get; set; }
-        public long EmployeeNumber { get; set; }
+        public string EmployeeNumber { get; set; }
         public string JobTitle { get; set; }
         public string CompanyName { get; set; }
         public DateTime StartDate { get; set; }
