@@ -10,6 +10,8 @@ namespace HRIS.Provider
 {
     public class CandidateProvider
     {
+        private static CandidateProvider _instance = new CandidateProvider();
+        public static CandidateProvider GetProvider() { return _instance; }
         public List<CandidateGridVM> GetGrid()
         {
             using (var dbContext = new HRISContext())
