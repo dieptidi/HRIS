@@ -6,7 +6,7 @@ namespace HRIS.ViewModel.Interviews
 {
     public class InterviewGridVM
     {
-        public long Id { get; set; }
+        public string CandidateId { get; set; }
         public string CandidateName { get; set; }
         public string InterviewDate { get; set; }
         public string Pic { get; set; }
