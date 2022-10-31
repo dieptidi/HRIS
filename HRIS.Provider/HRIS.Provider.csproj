@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HRIS.DataAccess\HRIS.DataAccess.csproj" />
+    <ProjectReference Include="..\HRIS.ViewModel\HRIS.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>
