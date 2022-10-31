@@ -102,6 +102,8 @@ namespace HRIS.Provider
 
         private string GenerateId(string jobApply, DateTime applyDate)
         {
+            // (huruf pertama job yang di apply)(yyMMdd)(no urut)
+            // misal daftar programmer di 31 okt 2022 urutan pertama => P221031001 
             string jobCode = jobApply.Substring(0, 1).ToUpper();
             string applyDateCode = applyDate.ToString("yyMMdd");
             string firstCode = $"{jobCode}{applyDateCode}";
@@ -113,7 +115,7 @@ namespace HRIS.Provider
             else
             {
                 var lastOrderCode = getData.Last().ToString().Substring(7);
-                var newOrderCode = Convert.ToInt32(lastOrderCode);
+                var newOrderCode = Convert.ToInt32(lastOrderCode) + 1;
                 return $"{firstCode}{newOrderCode.ToString("000")}";
             }
         }
