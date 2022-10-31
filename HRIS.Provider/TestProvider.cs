@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using HRIS.DataAccess.Models;
 using HRIS.Provider.Helpers;
+using HRIS.ViewModel.Tests;
 using System.Linq;
 
 namespace HRIS.Provider
 {
-    public class TestProvider : IProvider<Test>
+    public class TestProvider
     {
         private static TestProvider _instance = new TestProvider();
         public static TestProvider GetProvider()
@@ -15,31 +16,43 @@ namespace HRIS.Provider
             return _instance;
         }
 
-        public List<Test> GetAll()
+        public List<TestGridVM> GetGrid()
         {
             using (var dbContext = new HRISContext())
             {
-                var tests = dbContext.Tests.AsEnumerable();
+                var tests = dbContext.Tests.Select(ts => new TestGridVM
+                {
+                    CandidateId = ts.CandidateId,
+                    CandidateName = $"{ts.Candidate.FirstName} {ts.Candidate.LastName}",
+                    MinutesDuration = ts.MinutesDuration,
+                    Pic = ts.Pic,
+                    QuestionType = ts.QuestionType,
+                    TestDate = Helper.FormatDate(ts.TestDate)
+                }).AsEnumerable();
                 return tests.ToList();
             }
         }
 
-        public Test GetSingle(object id)
+        public TestUpsertVM GetSingle(object id)
         {
             using (var dbContext = new HRISContext())
             {
-                var test = dbContext.Tests.SingleOrDefault(ts => ts.CandidateId == id.ToString());
-                return test;
+                Test test = dbContext.Tests.SingleOrDefault(ts => ts.CandidateId == id.ToString());
+                TestUpsertVM vm = new TestUpsertVM();
+                Helper.CopyProperties(test, vm);
+                return vm;
             }
         }
 
-        public bool Insert(Test model)
+        public bool Insert(TestUpsertVM model)
         {
             try
             {
                 using (var dbContext = new HRISContext())
                 {
-                    dbContext.Add(model);
+                    Test test = new Test();
+                    Helper.CopyProperties(model, test);
+                    dbContext.Tests.Add(test);
                     dbContext.SaveChanges();
                     return true;
                 }
@@ -50,7 +63,7 @@ namespace HRIS.Provider
             }
         }
 
-        public bool Update(Test model)
+        public bool Update(TestUpsertVM model)
         {
             try
             {
