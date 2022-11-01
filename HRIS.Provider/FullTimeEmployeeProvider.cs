@@ -27,13 +27,15 @@ namespace HRIS.Provider
                     IdcardNumber = emp.EmployeeNumberNavigation.Candidate.IdcardNumber,
                     EmployeeNumber = emp.EmployeeNumber,
                     Salary = emp.Salary,
-                    Allowance = emp.Allowance
+                    Allowance = emp.Allowance,
+                    HiredDate = Helper.FormatDate(emp.EmployeeNumberNavigation.HiredDate.Value),
+                    Job = emp.EmployeeNumberNavigation.Job
                 }).AsEnumerable();
                 return fullEmployees.ToList();
             }
         }
 
-        public FullTimeUpsertVM GetSingle(object id) 
+        public FullTimeUpsertVM GetSingle(object id)
         {
             using (var dbContext = new HRISContext())
             {
@@ -44,6 +46,68 @@ namespace HRIS.Provider
             }
         }
 
+        public bool Insert(FullTimeUpsertVM model)
+        {
+            using (var dbContext = new HRISContext())
+            {
+                try
+                {
+                    FullTimeEmployee employee = new FullTimeEmployee();
+                    Helper.CopyProperties(model, employee);
+                    dbContext.FullTimeEmployees.Add(employee);
+                    return true;
 
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool Update(FullTimeUpsertVM model) 
+        {
+            try
+            {
+                using (var dbContext = new HRISContext())
+                {
+                    var selected = dbContext.FullTimeEmployees.SingleOrDefault(fte => fte.Id == model.Id);
+                    if (selected == null)
+                    {
+                        return false;
+                    }
+                    Helper.CopyProperties(model, selected);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(object id)
+        {
+            try
+            {
+                using (var dbContext = new HRISContext())
+                {
+                    var selected = dbContext.FullTimeEmployees.SingleOrDefault(fte => fte.Id == (int)id);
+                    if (selected == null)
+                    {
+                        return false;
+                    }
+
+                    dbContext.FullTimeEmployees.Remove(selected);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
