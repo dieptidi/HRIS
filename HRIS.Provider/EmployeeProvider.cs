@@ -10,6 +10,8 @@ namespace HRIS.Provider
 {
     public  class EmployeeProvider
     {
+        private static EmployeeProvider _instance = new EmployeeProvider();
+        public static EmployeeProvider GetProvider() { return _instance; }
         public List<EmployeeGridVM> GetGrid()
         {
             using (var dbContext = new HRISContext())

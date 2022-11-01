@@ -10,6 +10,8 @@ namespace HRIS.Provider
 {
     public class InterviewProvider
     {
+        private static InterviewProvider _instance = new InterviewProvider();
+        public static InterviewProvider GetProvider() { return _instance; }
         public List<InterviewGridVM> GetGrid()
         {
             using (var dbContext = new HRISContext())
