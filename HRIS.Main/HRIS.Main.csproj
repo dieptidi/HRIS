@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HRIS.Provider\HRIS.Provider.csproj" />
+    <ProjectReference Include="..\HRIS.ViewModel\HRIS.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>
